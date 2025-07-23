@@ -80,20 +80,36 @@ def main(args=None):
     # 定義導航點 1
     pose1 = PoseStamped()
     pose1.header.frame_id = 'map'
-    pose1.pose.position.x = 1.306
-    pose1.pose.position.y = -0.428
-    pose1.pose.orientation.z = -0.173
-    pose1.pose.orientation.w = 0.984
+    pose1.pose.position.x = -0.0808
+    pose1.pose.position.y = -0.1276
+    pose1.pose.orientation.z = 0.0215
+    pose1.pose.orientation.w = 0.9998
 
     # 定義導航點 2
     pose2 = PoseStamped()
     pose2.header.frame_id = 'map'
-    pose2.pose.position.x = 2.947
-    pose2.pose.position.y = -1.173
-    pose2.pose.orientation.z = 0.974
-    pose2.pose.orientation.w = 0.224
+    pose2.pose.position.x = 1.6056
+    pose2.pose.position.y = -0.4224
+    pose2.pose.orientation.z = 0.6032
+    pose2.pose.orientation.w = 0.7976
+    
+    # 定義導航點 3
+    pose3 = PoseStamped()
+    pose3.header.frame_id = 'map'
+    pose3.pose.position.x = 4.0037
+    pose3.pose.position.y = -1.5735
+    pose3.pose.orientation.z = -0.6986
+    pose3.pose.orientation.w = 0.7155
+    
+    # 定義導航點 4
+    pose4 = PoseStamped()
+    pose4.header.frame_id = 'map'
+    pose4.pose.position.x = 8.4905
+    pose4.pose.position.y = -1.2175
+    pose4.pose.orientation.z =  0.1310
+    pose4.pose.orientation.w = 0.9913
 
-    poses = [pose1, pose2]
+    poses = [pose1, pose2, pose3, pose4]
     i = 0
 
     print("多點導航已啟動。Enter=暫停，S=繼續，Q=結束。")
@@ -103,8 +119,9 @@ def main(args=None):
             time.sleep(0.2)
             continue
 
-        pose = poses[i % 2]
-        node.get_logger().info(f'導航至點 {i % 2 + 1}')
+        pose = poses[i % len(poses)]
+        node.get_logger().info(f'導航至點 {i % len(poses) + 1}')
+
         success = node.send_goal(pose)
         if not success:
             node.get_logger().warn('導航被取消或失敗')
